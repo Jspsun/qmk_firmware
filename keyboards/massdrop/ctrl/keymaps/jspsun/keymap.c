@@ -70,16 +70,16 @@ void matrix_scan_user(void) {
 
 uint32_t layer_state_set_user(uint32_t state) {
     if ((state & L2) == L2) {
-        rgblight_mode(6);
+        rgb_matrix_mode(RGB_MATRIX_CUSTOM_layer2);
     }
     else if ((state & L1) == L1) {
-        rgblight_mode(5);
+        rgb_matrix_mode(RGB_MATRIX_CUSTOM_layer1);
     }
     else if ((state & L0) == L0) {
-        rgblight_mode(4);
+        rgb_matrix_mode(RGB_MATRIX_CUSTOM_layer0);
     }
     else {
-        rgblight_mode(4);
+        rgb_matrix_mode(RGB_MATRIX_CUSTOM_layer0);
     }
 
   return state;

@@ -13,22 +13,23 @@ static void layer2_init(effect_params_t* params) {
 static bool layer2_run(effect_params_t* params) {
   RGB_MATRIX_USE_LIMITS(led_min, led_max);
   unsetEntireBoard(0);
+  rgblight_mode(4);
   // doRainbow(LAYER);
-  for(int i=led_min; i<=led_max; i++) {
-    if (isWASD(i)) {
-    }
-    else if (isGamerKey(i)) {
-    }
-    else if (isMedia(i)) {
-    }
-    else if (isKey(i) && !isPrintable(i)) {
-      setRGB(i, blue);
-    }
-    else if (isGlow(i)) {
-    }  
-    else {
-    }
-  }
+  // for(int i=led_min; i<=led_max; i++) {
+  //   if (isWASD(i)) {
+  //   }
+  //   else if (isGamerKey(i)) {
+  //   }
+  //   else if (isMedia(i)) {
+  //   }
+  //   else if (isKey(i) && !isPrintable(i)) {
+  //     setRGB(i, blue);
+  //   }
+  //   else if (isGlow(i)) {
+  //   }  
+  //   else {
+  //   }
+  // }
   return led_max < DRIVER_LED_TOTAL;
 }
 
