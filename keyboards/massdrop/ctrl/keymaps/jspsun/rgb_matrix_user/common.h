@@ -269,6 +269,24 @@ static void initGlitter(int x) {
     }
 }
 
+static void doGlitter(int i, Color base) {
+    uint16_t time = scale16by8(g_rgb_timer, rgb_matrix_config.speed / 10);
+    if (rand() * 50 == 1) {
+        if (rand() * 2 == 1) {
+            offset[i] += 2;
+        }
+        else {
+            offset[i] -= 2;
+        }
+    }
+    float val = (((float)sin8(time + offset[i]) / 256)/3.1) + .20;
+    Color glit;
+    glit.r = base.r * val;
+    glit.g = base.g * val;
+    glit.b = base.b * val;
+    setRGB(i, glit);
+}
+
 bool byRow(int x, int row) {
     switch (row) {
         case 1:
