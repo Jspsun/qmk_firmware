@@ -8,7 +8,12 @@ RGB_MATRIX_EFFECT(common)
 // needs to be an even number for now
 #define GLITTER_RANGE 100
 #define GLITTER_STEP 20
-#define LED_COUNT 106
+#define LED_COUNT 119
+
+#define max(a,b) \
+   ({ __typeof__ (a) _a = (a); \
+       __typeof__ (b) _b = (b); \
+     _a > _b ? _a : _b; })
 
 static bool set[LED_COUNT];
 static uint8_t offset[LED_COUNT];
@@ -202,6 +207,16 @@ bool isArrow(int x) {
     return false;
 }
 
+bool isAccented(int x) {
+    if (x >= 16 && x <= 27)
+        return true;
+    if (x >= 31 && x <= 41)
+        return true;
+    if (x >= 45 && x <= 54)
+        return true;
+    return isArrow(x);
+}
+
 bool isModifier(int x, int modifier) {
     switch (modifier) {
         case ESC:
@@ -269,8 +284,8 @@ static void initGlitter(int x) {
     }
 }
 
-static void doGlitter(int i, Color base) {
-    uint16_t time = scale16by8(g_rgb_timer, rgb_matrix_config.speed / 10);
+static void doGlitter(int i, Color base, Color base2) {
+    uint16_t time = scale16by8(g_rgb_timer, rgb_matrix_config.speed / 8);
     if (rand() * 50 == 1) {
         if (rand() * 2 == 1) {
             offset[i] += 2;
@@ -279,11 +294,11 @@ static void doGlitter(int i, Color base) {
             offset[i] -= 2;
         }
     }
-    float val = (((float)sin8(time + offset[i]) / 256)/3.1) + .20;
+    float val = (((float)sin8(time + offset[i]) / 256)/1.1) + 0.05;
     Color glit;
-    glit.r = base.r * val;
-    glit.g = base.g * val;
-    glit.b = base.b * val;
+    glit.r = max(base.r + (base2.r - base.r) * val, base2.r);
+    glit.g = max(base.g + (base2.g - base.g) * val, base2.g);
+    glit.b = max(base.b + (base2.b - base.b) * val, base2.b);
     setRGB(i, glit);
 }
 

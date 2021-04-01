@@ -56,7 +56,7 @@ static bool layer0_run(effect_params_t* params) {
         // }
         // setRGB(i, white);
         // rgblight_mode(RGBLIGHT_MODE_TWINKLE + 2);
-        doGlitter(i, white);
+        doGlitter(i, coldwhite, lightblue);
     }
     return led_max < DRIVER_LED_TOTAL;
 }

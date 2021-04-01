@@ -18,7 +18,9 @@
         "type_traits": "c",
         "utility": "c",
         "ranges": "c",
-        "random": "c"
+        "random": "c",
+        "chrono": "c",
+        "limits": "c"
     },
     "[markdown]": {
         "editor.trimAutoWhitespace": false,
