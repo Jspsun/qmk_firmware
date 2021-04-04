@@ -54,9 +54,12 @@ static bool layer1_run(effect_params_t* params) {
         // else if (isMedia(i)) {
         //     setRGB(i, pink);
         // }
-        // else {
+        if (isGlow(i)){
             setRGB(i, blue);
-        // }
+        }
+        else {
+            setRGB(i, lightblue);
+        }
     }
     return led_max < DRIVER_LED_TOTAL;
 }

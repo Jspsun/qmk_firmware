@@ -3,12 +3,17 @@ RGB_MATRIX_EFFECT(common)
 #ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 #include <math.h>
 
-#define LAST_KEY 66
+#define LAST_KEY 86
 #define MAX_TICKS 150
 // needs to be an even number for now
 #define GLITTER_RANGE 100
 #define GLITTER_STEP 20
-#define LED_COUNT 106
+#define LED_COUNT 119
+
+#define max(a,b) \
+   ({ __typeof__ (a) _a = (a); \
+       __typeof__ (b) _b = (b); \
+     _a > _b ? _a : _b; })
 
 static bool set[LED_COUNT];
 static uint8_t offset[LED_COUNT];
@@ -195,11 +200,23 @@ bool isGamerKey(int x) {
 }
 
 bool isArrow(int x) {
-    if (x >= 64 && x <= 66)
+    if (x >= 84 && x <= 86)
         return true;
-    if (x == 56)
+    if (x == 75)
         return true;
     return false;
+}
+
+bool isAccented(int x) {
+    if (x >= 0 && x <= 13)
+        return true;
+    if (x >= 34 && x <= 45)
+        return true;
+    if (x >= 51 && x <= 62)
+        return true;
+    if (x >= 64 && x <= 73)
+        return true;
+    return isArrow(x);
 }
 
 bool isModifier(int x, int modifier) {
@@ -267,6 +284,24 @@ static void initGlitter(int x) {
     for(int i=0; i<=105; i++) {
         offset[i] = 12 * rand();
     }
+}
+
+static void doGlitter(int i, Color base, Color base2) {
+    uint16_t time = scale16by8(g_rgb_timer, rgb_matrix_config.speed / 8);
+    if (rand() * 50 == 1) {
+        if (rand() * 2 == 1) {
+            offset[i] += 2;
+        }
+        else {
+            offset[i] -= 2;
+        }
+    }
+    float val = (((float)sin8(time + offset[i]) / 256)/1.1) + 0.05;
+    Color glit;
+    glit.r = max(base.r + (base2.r - base.r) * val, base2.r);
+    glit.g = max(base.g + (base2.g - base.g) * val, base2.g);
+    glit.b = max(base.b + (base2.b - base.b) * val, base2.b);
+    setRGB(i, glit);
 }
 
 bool byRow(int x, int row) {
