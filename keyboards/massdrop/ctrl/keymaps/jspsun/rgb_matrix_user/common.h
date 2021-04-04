@@ -3,7 +3,7 @@ RGB_MATRIX_EFFECT(common)
 #ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 #include <math.h>
 
-#define LAST_KEY 66
+#define LAST_KEY 86
 #define MAX_TICKS 150
 // needs to be an even number for now
 #define GLITTER_RANGE 100
@@ -200,19 +200,21 @@ bool isGamerKey(int x) {
 }
 
 bool isArrow(int x) {
-    if (x >= 64 && x <= 66)
+    if (x >= 84 && x <= 86)
         return true;
-    if (x == 56)
+    if (x == 75)
         return true;
     return false;
 }
 
 bool isAccented(int x) {
-    if (x >= 16 && x <= 27)
+    if (x >= 0 && x <= 13)
         return true;
-    if (x >= 31 && x <= 41)
+    if (x >= 34 && x <= 45)
         return true;
-    if (x >= 45 && x <= 54)
+    if (x >= 51 && x <= 62)
+        return true;
+    if (x >= 64 && x <= 73)
         return true;
     return isArrow(x);
 }
